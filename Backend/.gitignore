@@ -1,0 +1,5 @@
+# No subir node_modules
+node_modules/
+
+# No subir variables sensibles
+.env
