@@ -5,31 +5,28 @@ import { Injectable } from '@angular/core';
 })
 export class AuthService {
 
-  // Guardar token e información del usuario
-  login(token: string, user: any) {
-    localStorage.setItem('token', token);
-    localStorage.setItem('usuario', JSON.stringify(user)); // Usuario completo
+  private usuarioKey = 'usuario'; // Nombre de clave en localStorage
+
+  constructor() {}
+
+  // Guardar usuario (o token) en localStorage
+  guardarUsuario(usuario: any) {
+    localStorage.setItem(this.usuarioKey, JSON.stringify(usuario));
   }
 
-  // Obtener token
-  getToken(): string | null {
-    return localStorage.getItem('token');
-  }
-
-  // Obtener datos del usuario
-  getUsuario(): any {
-    const usuario = localStorage.getItem('usuario');
+  // Obtener usuario guardado
+  obtenerUsuario() {
+    const usuario = localStorage.getItem(this.usuarioKey);
     return usuario ? JSON.parse(usuario) : null;
   }
 
-  // Verificar si está autenticado
+  // Saber si el usuario está autenticado
   estaAutenticado(): boolean {
-    return !!localStorage.getItem('token');
+    return localStorage.getItem(this.usuarioKey) !== null;
   }
 
-  // Cerrar sesión
-  logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('usuario');
+  // Eliminar usuario (logout)
+  cerrarSesion() {
+    localStorage.removeItem(this.usuarioKey);
   }
 }

@@ -1,14 +1,16 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
-import { LoginComponent } from './components/login/login.component';
-import { RegistroComponent } from './components/registro/registro.component';
-import { PerfilComponent } from './components/perfil/perfil.component';
-import { AuthGuard } from './guards/auth.guard'; //  Importa el guard
+import { HomeComponent } from '../component/home/home.component';
+import { LoginComponent } from '../component/login/login.component';
+import { RegistroComponent } from '../component/registro/registro.component';
+import { PerfilComponent } from '../component/perfil/perfil.component';
+import { UsuariosComponent } from '../component/usuarios/usuarios.component';
+import { AuthGuard } from '../guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: RegistroComponent },
-  { path: 'perfil', component: PerfilComponent, canActivate: [AuthGuard] }, // Ruta protegida
+  { path: 'perfil', component: PerfilComponent, canActivate: [AuthGuard] },
+  { path: 'usuarios', component: UsuariosComponent },
   { path: '**', redirectTo: '' }
 ];

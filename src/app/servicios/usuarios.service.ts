@@ -2,27 +2,25 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-// Interfaz para tipar los usuarios
 export interface Usuario {
   nombre: string;
-  email: string;
+  correo: string;
+  contrasena: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuariosService {
-  private apiUrl = 'http://localhost:3000/api/usuarios'; // URL de tu backend
+  private apiUrl = 'http://localhost:3000/api/usuarios'; // 👈 Cambia el endpoint si tu backend usa otro
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  // Obtener todos los usuarios
-  getUsuarios(): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(this.apiUrl);
+  registrarUsuario(usuario: Usuario): Observable<any> {
+    return this.http.post(`${this.apiUrl}/registro`, usuario);
   }
 
-  // Crear un nuevo usuario
-  crearUsuario(usuario: Usuario): Observable<Usuario> {
-    return this.http.post<Usuario>(this.apiUrl, usuario);
+  obtenerUsuarios(): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(this.apiUrl);
   }
 }

@@ -1,44 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UsuariosService, Usuario } from '../servicios/usuarios.service';
+import { UsuariosService } from '../../servicios/usuarios.service';
 
 @Component({
   selector: 'app-registro',
+  standalone: true,
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.css']
 })
-export class RegistroComponent implements OnInit {
-  usuarios: Usuario[] = [];
+export class RegistroComponent {
   registroForm: FormGroup;
+  mensaje: string = '';
 
   constructor(private fb: FormBuilder, private usuariosService: UsuariosService) {
     this.registroForm = this.fb.group({
       nombre: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      correo: ['', [Validators.required, Validators.email]],
+      contrasena: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
-  ngOnInit(): void {
-    this.usuariosService.getUsuarios().subscribe((data: Usuario[]) => {
-      this.usuarios = data;
-    });
-  }
-
-  onSubmit() {
-    if (this.registroForm.invalid) return;
-
-    const nuevoUsuario: Usuario = this.registroForm.value;
-    this.usuariosService.crearUsuario(nuevoUsuario).subscribe(
-      (usuario: Usuario) => {
-        this.usuarios.push(usuario);
-        this.registroForm.reset();
-        alert('Usuario registrado con éxito');
-      },
-      (error) => {
-        console.error('Error al registrar usuario:', error);
-        alert('Error al registrar usuario');
-      }
-    );
+  onSubmit(): void {
+    if (this.registroForm.valid) {
+      this.usuariosService.registrarUsuario(this.registroForm.value).subscribe({
+        next: (res) => {
+          this.mensaje = 'Usuario registrado con éxito';
+          this.registroForm.reset();
+        },
+        error: (err) => {
+          this.mensaje = 'Error al registrar usuario';
+          console.error(err);
+        },
+      });
+    }
   }
 }

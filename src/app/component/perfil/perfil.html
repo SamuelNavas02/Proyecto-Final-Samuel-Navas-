@@ -1,0 +1,4 @@
+<div class="perfil-container" *ngIf="usuario">
+  <h2>Bienvenido, {{ usuario.email }}</h2>
+  <button (click)="cerrarSesion()">Cerrar sesión</button>
+</div>

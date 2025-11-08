@@ -3,34 +3,30 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { routes } from './app.routes';
+import { routes } from './routes/app.routes';
 
-// Componentes normales
+// Componentes standalone
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { RegistroComponent } from './registro/registro.component';
-
-// Standalone Components
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { PerfilComponent } from './perfil/perfil.component';
+import { NavbarComponent } from './component/navbar/navbar.component';
+import { LoginComponent } from './component/login/login.component';
+import { RegistroComponent } from './component/registro/registro.component';
+import { PerfilComponent } from './component/perfil/perfil.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavbarComponent,
-    RegistroComponent
-    // ❌ PerfilComponent se elimina de aquí
-  ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(routes),
-    DashboardComponent,
-    PerfilComponent   // ✅ Aquí sí, porque es standalone
+
+    // Importamos los standalone directamente
+    AppComponent,
+    NavbarComponent,
+    LoginComponent,
+    RegistroComponent,
+    PerfilComponent
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

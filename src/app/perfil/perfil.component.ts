@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-perfil',
-  standalone: true,          // ✅ Importante
+  standalone: true,          //  Importante
   templateUrl: './perfil.component.html',
   styleUrls: ['./perfil.component.css']
 })
